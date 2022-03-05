@@ -1,0 +1,107 @@
+Limits Microservice->Spring Cloud Config Server
+Limits Microservice->Microservice X
+Limits Microservice->Microservice Y
+Spring Cloud Config Server->Git Repo
+
+1)Limits of microservice
+	Dependencies-->spring web, Dev, Actuator, Config Client
+		Config client->Client that connects to a Spring Cloud Config Server to fetch the application's configuration.
+  limit set through class or limit set through properties file
+also need below dependency for a configuration class i.e LimitValueThroughProperties
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+
+2) Spring Cloud Config server--->mkdir git-localconfig-repo
+					cd git-localconfig-repo
+					git init
+
+
+
+Now connect  config server to git by @EnableConfigServer in the main file
+and in application.properties we need to add spring.cloud.config.server.git.uri=file:\\C:/Users/tanish/Desktop/28MICRO/git-localconfig-repo
+
+url is :http://localhost:8888/limits-service/default
+
+
+ Do you get this error 'org.springframework.cloud.config.server.environment.NoSuchLabelException: No such label: master? Add this in 
+application.properties: 'spring.cloud.config.server.git.default-label=main
+
+
+3) Profiles for Limit services------>
+spring.profiles.active=dev
+spring.cloud.config.profile=dev
+
+4)Currency Exchange Microservice------>USD TO INR
+Dependencies-->spring web, Dev, Actuator, Config Client
+Enviorenment Instance1 or 2..... port change or more tha one port
+URL
+http://localhost:8000/currency-exchange/from/USD/to/INR
+
+
+
+Response Structure
+{
+   "id":10001,
+   "from":"USD",
+   "to":"INR",
+   "conversionMultiple":65.00,
+   "environment":"8000 instance-id"
+}
+
+5) Currency Conversion microservice----->
+Enviorenment Instance1 or 2..... port change or more tha one port
+	
+URL
+http://localhost:8100/currency-conversion/from/USD/to/INR/quantity/10
+
+
+
+Response Structure
+{
+  "id": 10001,
+  "from": "USD",
+  "to": "INR",
+  "conversionMultiple": 65.00,
+  "quantity": 10,
+  "totalCalculatedAmount": 650.00,
+  "environment": "8000 instance-id"
+}
+
+6) Eureka Server
+  dependency-->eureka server, actuator,config client,dev 
+
+7)api gateway
+8765 port
+http://localhost:8765/CURRENCY-EXCHANGE/currency-exchange/from/EUR/to/INR
+http://localhost:8765/CURRENCY-CONVERSION/currency-conversion/from/USD/to/INR/quantity/10
+http://localhost:8765/currency-conversion/currency-conversion/from/USD/to/INR/quantity/10  //for lower case
+eureka.instance.hostname=localhost add this to all microservice except eureka server
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+THE REACT PROJECT----------------------------------------------------------------------------------------------------------
+--> First of all we need routing and lazy loding. Lazy loading is used when e.g if our one component loaded times is 5sec and 2nd component time is 
+	2sec so the 2nd components first loads. Lazy loading is used when the code complexity is high in our app.
+
+	for fallback loading we use suspense tag
+	npm i react-router-dom@5.2.0
+
+
+------SignupPAGE
+npm install react-bootstrap bootstrap@5.1.3
+npm i react-icons tailwindcss
